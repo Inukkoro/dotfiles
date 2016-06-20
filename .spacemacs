@@ -42,7 +42,7 @@ values."
      auto-completion
      ;; syntax-checking
      version-control
-     spell-checking
+     ;; spell-checking
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
