@@ -24,23 +24,35 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; better-defaults
+
+     csharp
+     php
      emacs-lisp
-     git
      markdown
-     ;; org
+     org
+     javascript ;; coffee
+     sql
+
+     git
+
+     gtags
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      auto-completion
+     ;; syntax-checking
+     version-control
      spell-checking
-     syntax-checking
-     ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      ;; git-gutter
+                                      recentf-ext
+                                      twig-mode
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -106,7 +118,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Ricty Diminished Discord"
                                :size 13
                                :weight normal
                                :width normal
@@ -206,7 +218,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -249,7 +261,82 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;;----------------------------------------------------------------------
+  ;; C-hをBackspaceに割り当て
+  ;;----------------------------------------------------------------------
+  (global-set-key "\C-h" 'delete-backward-char)
+
+  ;;----------------------------------------------------------------------
+  ;; 行番号表示
+  ;;----------------------------------------------------------------------
+  (global-linum-mode 1)
+  (setq linum-format "%4d ")
+  (global-set-key [f6] 'linum-mode)
+
+  ;;----------------------------------------------------------------------
+  ;; @ helm-projectile
+  ;;----------------------------------------------------------------------
+  (custom-set-variables
+   '(projectile-enable-caching t))
+  (projectile-global-mode t)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+
+  (setq helm-split-window-default-side 'below)
+
+  (setq helm-for-files-preferred-list
+        '(helm-source-buffers-list
+          helm-source-recentf
+          ;;helm-source-file-cache
+          helm-source-files-in-current-dir
+          helm-source-projectile-files-list
+          ;;helm-source-locate
+          ;;helm-source-bookmarks
+          ))
+
+  (define-key global-map (kbd "C-;")     'helm-for-files)
+  (define-key helm-map (kbd "C-h") 'delete-backward-char)
+
+  ;;----------------------------------------------------------------------
+  ;; @ git-gutter
+  ;;----------------------------------------------------------------------
+  ;; (global-git-gutter-mode +1)
+
+  (custom-set-variables
+   '(git-gutter:handled-backends '(git hg svn)))
+
+  ;; (custom-set-variables
+  ;;  '(git-gutter:update-interval 10))
+
+  ;; (git-gutter:linum-setup)
+  '(version-control :variables
+                    version-control-diff-tool 'git-gutter)
+  ;;----------------------------------------------------------------------
+  ;; @ recentf-ext
+  ;;----------------------------------------------------------------------
+  ;; 自動保存
+  ;;(use-package recentf-ext
+    ;;:config
+    (setq recentf-max-saved-items 1000)
+    (setq recentf-exclude '(".recentf"))
+    (setq recentf-auto-cleanup 10)
+    (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
+    (recentf-mode 1);;)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
