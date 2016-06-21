@@ -270,9 +270,9 @@ you should place your code here."
   ;;----------------------------------------------------------------------
   ;; 行番号表示
   ;;----------------------------------------------------------------------
-  (global-linum-mode 1)
-  (setq linum-format "%4d ")
-  (global-set-key [f6] 'linum-mode)
+  ;; (global-linum-mode 1)
+  ;; (setq linum-format "%4d ")
+  ;; (global-set-key [f6] 'linum-mode)
 
   ;;----------------------------------------------------------------------
   ;; @ helm-projectile
@@ -316,13 +316,21 @@ you should place your code here."
   ;; @ recentf-ext
   ;;----------------------------------------------------------------------
   ;; 自動保存
-  ;;(use-package recentf-ext
-    ;;:config
+  (use-package recentf-ext
+    :config
     (setq recentf-max-saved-items 1000)
     (setq recentf-exclude '(".recentf"))
     (setq recentf-auto-cleanup 10)
     (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
-    (recentf-mode 1);;)
+    (recentf-mode 1))
+
+  ;;----------------------------------------------------------------------
+  ;; @ title
+  ;;----------------------------------------------------------------------
+  (setq frame-title-format
+        (if (buffer-file-name)
+            (format "%%f - Emacs")
+          (format "%%b - Emacs")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
