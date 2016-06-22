@@ -263,6 +263,14 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;;----------------------------------------------------------------------
+  ;; @ title
+  ;;----------------------------------------------------------------------
+  (setq frame-title-format
+        (if (buffer-file-name)
+            (format "%%f - Emacs")
+          (format "%%b - Emacs")))
+
+  ;;----------------------------------------------------------------------
   ;; C-hをBackspaceに割り当て
   ;;----------------------------------------------------------------------
   (global-set-key "\C-h" 'delete-backward-char)
@@ -275,43 +283,52 @@ you should place your code here."
   ;; (global-set-key [f6] 'linum-mode)
 
   ;;----------------------------------------------------------------------
-  ;; @ helm-projectile
+  ;; @ helm
   ;;----------------------------------------------------------------------
-  (custom-set-variables
-   '(projectile-enable-caching t))
-  (projectile-global-mode t)
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
+  (use-package helm-projectile
+    :config
+    (custom-set-variables
+     '(projectile-enable-caching t))
+    (projectile-global-mode t)
+    (setq projectile-completion-system 'helm)
+    (helm-projectile-on)
+    )
+  (use-package helm
+    :config
+    (setq helm-split-window-default-side 'below)
 
-  (setq helm-split-window-default-side 'below)
+    (setq helm-for-files-preferred-list
+          '(helm-source-buffers-list
+            helm-source-recentf
+            ;;helm-source-file-cache
+            helm-source-files-in-current-dir
+            helm-source-projectile-files-list
+            ;;helm-source-locate
+            ;;helm-source-bookmarks
+            ))
 
-  (setq helm-for-files-preferred-list
-        '(helm-source-buffers-list
-          helm-source-recentf
-          ;;helm-source-file-cache
-          helm-source-files-in-current-dir
-          helm-source-projectile-files-list
-          ;;helm-source-locate
-          ;;helm-source-bookmarks
-          ))
-
-  (define-key global-map (kbd "C-;")     'helm-for-files)
-  (define-key helm-map (kbd "C-h") 'delete-backward-char)
-
+    (define-key global-map (kbd "C-;")     'helm-for-files)
+    (define-key helm-map (kbd "C-h") 'delete-backward-char)
+    )
   ;;----------------------------------------------------------------------
   ;; @ git-gutter
   ;;----------------------------------------------------------------------
   ;; (global-git-gutter-mode +1)
+  (use-package git-gutter
+    :config
+    '(version-control :variables
+                      version-control-diff-tool 'git-gutter)
 
-  (custom-set-variables
-   '(git-gutter:handled-backends '(git hg svn)))
+    (custom-set-variables
+     '(git-gutter:handled-backends '(git hg svn)))
 
-  ;; (custom-set-variables
-  ;;  '(git-gutter:update-interval 10))
+    ;; (custom-set-variables
+    ;;  '(git-gutter:update-interval 10))
 
-  ;; (git-gutter:linum-setup)
-  '(version-control :variables
-                    version-control-diff-tool 'git-gutter)
+    ;; git-gutterをlinumに表示する
+    ;; (git-gutter:linum-setup)
+
+    )
   ;;----------------------------------------------------------------------
   ;; @ recentf-ext
   ;;----------------------------------------------------------------------
@@ -324,13 +341,6 @@ you should place your code here."
     (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
     (recentf-mode 1))
 
-  ;;----------------------------------------------------------------------
-  ;; @ title
-  ;;----------------------------------------------------------------------
-  (setq frame-title-format
-        (if (buffer-file-name)
-            (format "%%f - Emacs")
-          (format "%%b - Emacs")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
