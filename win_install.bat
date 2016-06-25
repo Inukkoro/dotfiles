@@ -1,3 +1,4 @@
+cd /d %~dp0
 @echo 管理者権限で実行すること
 @echo 事前にspacemacsの初回起動、preztoの初回起動を
 @echo 行っておくこと
@@ -15,5 +16,5 @@ exit
 
 :create_link
 if exist ..\%1 (move ..\%1 ..\%1_bak)
-mklink ..\%1 %1
+mklink ..\%1 dotfiles\%1
 exit /b
