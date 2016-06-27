@@ -317,9 +317,11 @@ you should place your code here."
   ;; (global-git-gutter-mode +1)
   (use-package git-gutter
     :config
+    ;; version-controlとしてgit-gutterを使用する
     '(version-control :variables
                       version-control-diff-tool 'git-gutter)
 
+    ;; git-gutterでgit、hg、svnを対象とする
     (custom-set-variables
      '(git-gutter:handled-backends '(git hg svn)))
 
