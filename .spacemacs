@@ -51,10 +51,11 @@ values."
    dotspacemacs-additional-packages '(
                                       recentf-ext
                                       twig-mode
+                                      csv-mode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
-                                    ggtags ;; 重い？
+                                    ;; ggtags ;; 重い？
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
