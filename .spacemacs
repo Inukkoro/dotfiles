@@ -52,10 +52,13 @@ values."
                                       recentf-ext
                                       twig-mode
                                       csv-mode
+                                      ;; php-eldoc
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
+                                    ;; auto-complete
                                     ;; ggtags ;; 重い？
+                                    eldoc ;; phpで固まる原因？
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -344,6 +347,18 @@ you should place your code here."
     (setq recentf-auto-cleanup 10)
     (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
     (recentf-mode 1))
+
+  ;;----------------------------------------------------------------------
+  ;; @ wdired
+  ;;----------------------------------------------------------------------
+  ;; (eval-after-load "dired"
+  ;;   '(lambda ()
+  ;;      (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)))
+
+  ;;----------------------------------------------------------------------
+  ;; @ company
+  ;;----------------------------------------------------------------------
+  (global-company-mode)
 
   )
 

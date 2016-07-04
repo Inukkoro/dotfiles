@@ -30,12 +30,6 @@ endif
 " 適宜 call dein#update や call dein#clear_state を呼んでください。
 " そもそもキャッシュしなくて良いならload_state/save_stateを呼ばないようにしてください。
 
-" 2016.04.16 追記
-" load_cache -> load_state
-" save_cache -> save_state
-" となり書き方が少し変わりました。
-" 追記終わり
-
 " vimprocだけは最初にインストールしてほしい
 if dein#check_install(['vimproc'])
   call dein#install(['vimproc'])
@@ -58,4 +52,4 @@ set backspace=indent,eol,start
 set mouse=a
 syntax enable
 set background=dark
-colorscheme solarized
+" colorscheme solarized
