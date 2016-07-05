@@ -49,6 +49,8 @@ set tabstop=4
 set shiftwidth=4
 set noexpandtab
 set backspace=indent,eol,start
+set notitle
+set wildmenu
 set mouse=a
 syntax enable
 set background=dark

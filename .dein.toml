@@ -10,3 +10,6 @@ repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
