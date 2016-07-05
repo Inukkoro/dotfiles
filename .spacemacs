@@ -32,6 +32,7 @@ values."
      org
      javascript ;; coffee
      sql
+     html
 
      git
 
